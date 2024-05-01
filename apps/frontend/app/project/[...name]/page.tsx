@@ -4,7 +4,7 @@ import { PlasmicComponent } from "@plasmicapp/loader-nextjs";
 import { PLASMIC } from "../../../plasmic-init";
 import { PlasmicClientRootProvider } from "../../../plasmic-init-client";
 import {
-  cachedGetProjectsBySlugs,
+  cachedGetProjectByName,
   cachedGetCodeMetricsByProjectIds,
   cachedGetOnchainMetricsByProjectIds,
   cachedGetAllEventTypes,
@@ -41,26 +41,28 @@ const cachedFetchComponent = cache(async (componentName: string) => {
  * on the first HTTP request, which should be faster than fetching it client-side
  */
 
+type ProjectPagePath = {
+  name: string[];
+};
+
 type ProjectPageProps = {
-  params: {
-    slug: string[];
-  };
+  params: ProjectPagePath;
 };
 
 export default async function ProjectPage(props: ProjectPageProps) {
   const { params } = props;
-  const slugs = [catchallPathToString(params.slug)];
-  if (!params.slug || !Array.isArray(params.slug) || params.slug.length < 1) {
+  if (!params.name || !Array.isArray(params.name) || params.name.length < 1) {
     logger.warn("Invalid project page path", params);
     notFound();
   }
 
   // Get project metadata from the database
-  const { projects: projectArray } = await cachedGetProjectsBySlugs({
-    project_slugs: slugs,
+  const name = catchallPathToString(params.name);
+  const { projects: projectArray } = await cachedGetProjectByName({
+    project_name: name,
   });
   if (!Array.isArray(projectArray) || projectArray.length < 1) {
-    logger.warn(`Cannot find project (slugs=${slugs})`);
+    logger.warn(`Cannot find project (name=${name})`);
     notFound();
   }
   const project = projectArray[0];
