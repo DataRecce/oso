@@ -9,24 +9,25 @@ import { gql } from "../__generated__/gql";
 
 const GET_ALL_ARTIFACTS = gql(`
   query Artifacts @cached (ttl: 300) {
-    artifacts {
+    artifacts_v1 {
       artifact_id
+      artifact_source_id
       artifact_namespace
       artifact_type
-      artifact_source_id
       artifact_latest_name
       artifact_names
+      artifact_url
     }
   }
 `);
 
 const GET_ARTIFACTS_BY_IDS = gql(`
   query ArtifactByIds($artifact_ids: [String!]) @cached(ttl: 300) {
-    artifacts(where: { artifact_id: { _in: $artifact_ids }}) {
+    artifacts_v1(where: { artifact_id: { _in: $artifact_ids }}) {
       artifact_id
+      artifact_source_id
       artifact_namespace
       artifact_type
-      artifact_source_id
       artifact_latest_name
       artifact_names
       artifact_url
@@ -36,11 +37,11 @@ const GET_ARTIFACTS_BY_IDS = gql(`
 
 const GET_ARTIFACT_BY_NAME = gql(`
   query ArtifactByName($artifact_namespace: String!, $artifact_type: String!, $artifact_name: String!) @cached(ttl: 300) {
-    artifacts(where: { artifact_namespace: { _eq: $artifact_namespace }, artifact_type: { _eq: $artifact_type }, artifact_latest_name: { _eq: $artifact_name } }) {
+    artifacts_v1(where: { artifact_namespace: { _eq: $artifact_namespace }, artifact_type: { _eq: $artifact_type }, artifact_latest_name: { _eq: $artifact_name } }) {
       artifact_id
+      artifact_source_id
       artifact_namespace
       artifact_type
-      artifact_source_id
       artifact_latest_name
       artifact_names
       artifact_url
@@ -62,7 +63,7 @@ const GET_ARTIFACT_IDS_BY_PROJECT_IDS = gql(`
 
 const GET_ALL_PROJECTS = gql(`
   query Projects @cached(ttl: 300) {
-    projects {
+    projects_v1 {
       project_id
       project_slug
       project_name
@@ -72,7 +73,7 @@ const GET_ALL_PROJECTS = gql(`
 
 const GET_PROJECTS_BY_IDS = gql(`
   query ProjectsByIds($project_ids: [String!]) @cached(ttl: 300) {
-    projects(where: { project_id: { _in: $project_ids }}) {
+    projects_v1(where: { project_id: { _in: $project_ids }}) {
       project_id
       project_slug
       project_name
@@ -82,7 +83,7 @@ const GET_PROJECTS_BY_IDS = gql(`
 
 const GET_PROJECTS_BY_SLUGS = gql(`
   query ProjectsBySlugs($project_slugs: [String!]) @cached(ttl: 300) {
-    projects(where: { project_slug: { _in: $project_slugs } }) {
+    projects_v1(where: { project_slug: { _in: $project_slugs } }) {
       project_id
       project_slug
       project_name
@@ -96,7 +97,7 @@ const GET_PROJECTS_BY_SLUGS = gql(`
 
 const GET_ALL_COLLECTIONS = gql(`
   query Collections @cached(ttl: 300) {
-    collections {
+    collections_v1 {
       collection_id
       user_namespace
       collection_slug
@@ -107,7 +108,7 @@ const GET_ALL_COLLECTIONS = gql(`
 
 const GET_COLLECTIONS_BY_IDS = gql(`
   query CollectionsByIds($collection_ids: [String!]) @cached(ttl: 300) {
-    collections(where: { collection_id: { _in: $collection_ids }}) {
+    collections_v1(where: { collection_id: { _in: $collection_ids }}) {
       collection_id
       user_namespace
       collection_slug
@@ -118,7 +119,7 @@ const GET_COLLECTIONS_BY_IDS = gql(`
 
 const GET_COLLECTIONS_BY_SLUGS = gql(`
   query CollectionsBySlugs($collection_slugs: [String!]) @cached(ttl: 300) {
-    collections(where: { collection_slug: { _in: $collection_slugs }, user_namespace: { _eq: "oso" } }) {
+    collections_v1(where: { collection_slug: { _in: $collection_slugs }, user_namespace: { _eq: "oso" } }) {
       collection_id
       user_namespace
       collection_slug
@@ -143,26 +144,28 @@ const GET_CODE_METRICS_BY_PROJECT = gql(`
   query CodeMetricsByProject(
     $project_ids: [String!],
   ) {
-    code_metrics_by_project(where: {
+    code_metrics_by_project_v1(where: {
       project_id: { _in: $project_ids },
     }) {
       project_id
+      project_slug
       project_name
-      stars
-      repositories
-      pull_requests_opened_6_months
-      pull_requests_merged_6_months
-      new_contributors_6_months
-      last_commit_date
-      issues_opened_6_months
-      issues_closed_6_months
-      avg_active_devs_6_months
-      avg_fulltime_devs_6_months
-      commits_6_months
-      contributors
-      contributors_6_months
+      artifact_namespace
       first_commit_date
-      forks
+      last_commit_date
+      repository_count
+      star_count
+      fork_count
+      total_contributor_count
+      contributor_count_6_months
+      new_contributor_count_6_months
+      avg_fulltime_developer_count_6_months
+      avg_active_developer_count_6_months
+      commit_count_6_months
+      opened_issue_count_6_months
+      closed_issue_count_6_months
+      opened_pull_request_count_6_months
+      merged_pull_request_count_6_months
     }
   }
 `);
@@ -171,26 +174,27 @@ const GET_ONCHAIN_METRICS_BY_PROJECT = gql(`
   query OnchainMetricsByProject(
     $project_ids: [String!],
   ) {
-    onchain_metrics_by_project(where: {
+    onchain_metrics_by_project_v1(where: {
       project_id: { _in: $project_ids },
     }) {
       project_id
+      project_slug
       project_name
-      active_users
-      first_txn_date
-      high_frequency_users
-      l2_gas_6_months
-      less_active_users
-      more_active_users
-      multi_project_users
-      network
-      new_user_count
-      num_contracts
+      artifact_namespace
+      total_contract_count
+      first_transaction_date
+      total_transaction_count
+      transaction_count_6_months
       total_l2_gas
-      total_txns
-      total_users
-      txns_6_months
-      users_6_months
+      l2_gas_6_months
+      total_user_address_count
+      user_address_count_6_months
+      new_user_address_count_3_months
+      high_frequency_user_address_count
+      more_active_user_address_count
+      less_active_user_address_count
+      multi_project_user_address_count
+      total_active_user_address_count
     }
   }
 `);
