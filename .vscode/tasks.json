@@ -9,11 +9,6 @@
             "command": "bash .devcontainer/github_codespace_env.sh",
         },
         {
-            "label": "Install Project dependencies",
-            "type": "shell",
-            "command": "poetry install && poetry env use python",
-        },
-        {
             "label": "Setup required environment variables",
             "type": "shell",
             "command": "bash .devcontainer/setup_required_env.sh",
@@ -21,7 +16,7 @@
         {
             "label": "Run DBT",
             "type": "shell",
-            "command": "dbt deps && dbt build && dbt docs generate",
+            "command": "bash .devcontainer/prepare_dbt_manifest.sh",
             "dependsOn": [
                 "Setup required environment variables",
                 "Check GitHub CodeSpace environment"
