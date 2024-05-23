@@ -33,8 +33,6 @@ jobs:
 
     - name: Run pysync
       env:
-        # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        # We need the "workflows" permission which the github token for job cannot provide. Use the PersonalAccessToken instead.
-        GITHUB_TOKEN: ${{ secrets.GH_TOKEN_FOR_ADVANCED_PERMISSIONS }}    
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         prsync 'DataRecce/oso'
