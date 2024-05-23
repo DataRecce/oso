@@ -33,6 +33,7 @@ jobs:
 
     - name: Run pysync
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN_FOR_ADVANCED_PERMISSIONS }}
       run: |
         prsync 'DataRecce/oso'
