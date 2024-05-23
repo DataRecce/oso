@@ -1,6 +1,7 @@
 name: OSO Recce CI
 
 on:
+  workflow_dispatch:
   pull_request:
     branches: [main, dev]
     paths:
