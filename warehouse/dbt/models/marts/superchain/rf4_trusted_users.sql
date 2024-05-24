@@ -9,7 +9,7 @@ with user_model as (
     ) as eigentrust_verification,
     CAST(
       passport_scores.evidence_rawscore
-      >= passport_scores.evidence_threshold as bool
+      > passport_scores.evidence_threshold as bool
     ) as passport_verification
   from {{ ref('int_artifacts_by_user') }} as artifacts_by_user
   left join {{ ref('stg_passport__scores') }} as passport_scores
