@@ -5,11 +5,11 @@ with user_model as (
     artifacts_by_user.user_source_id,
     artifacts_by_user.artifact_name,
     CAST(
-      true as string
+      true as bool
     ) as eigentrust_verification,
     CAST(
       passport_scores.evidence_rawscore
-      >= passport_scores.evidence_threshold as string
+      > passport_scores.evidence_threshold as bool
     ) as passport_verification
   from {{ ref('int_artifacts_by_user') }} as artifacts_by_user
   left join {{ ref('stg_passport__scores') }} as passport_scores
@@ -23,5 +23,5 @@ select
   artifact_name
 from user_model
 where
-  passport_verification = "true"
-  or eigentrust_verification = "true"
+  passport_verification is true
+  or eigentrust_verification is true
