@@ -18,5 +18,13 @@
         },
         "extensions": []
         },
-    "forwardPorts": [8000]
+    "forwardPorts": [8000],
+    "portsAttributes": {
+        "8000": {
+            "label": "Recce Server",
+            "onAutoForward": "openBrowser"
+        }
+    },
+    "postStartCommand": "echo 'DevContainer is ready!'; bash .dev/post_start_command.sh"
+
 }
