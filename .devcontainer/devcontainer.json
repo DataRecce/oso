@@ -25,6 +25,6 @@
             "onAutoForward": "openBrowser"
         }
     },
-    "postStartCommand": "echo 'DevContainer is ready!'; bash .dev/post_start_command.sh"
+    "postStartCommand": "echo 'DevContainer is ready!'; bash .devcontainer/post_start_command.sh"
 
 }
