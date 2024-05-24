@@ -3,7 +3,7 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 # Check if the dbt's target path is existed
-if [ -d "${DIR}/../recce_state.json" ]; then
+if [ -f "${DIR}/../recce_state.json" ]; then
     echo "The Recce state file is found. Skip preparing the dbt manifest."
     exit 0
 fi
