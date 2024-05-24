@@ -16,6 +16,7 @@ if [ "${CODESPACES}" == "true" ]; then
       echo "Downloading the Recce state file for the last successful run."
       gh run download $run_id --dir .recce
       echo "The Recce state file is downloaded to '.recce/recce_state_file/recce_state.json'."
+      cp .recce/recce_state_file/recce_state.json .
     fi
   fi
 

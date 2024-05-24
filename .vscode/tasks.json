@@ -27,9 +27,9 @@
             "type": "shell",
             "command": "bash .devcontainer/launch_recce_server.sh",
             "dependsOn": ["Run DBT"],
-            "runOptions": {
-                "runOn": "folderOpen"
-            }
+            // "runOptions": {
+            //     "runOn": "folderOpen"
+            // }
         }
     ]
 }
