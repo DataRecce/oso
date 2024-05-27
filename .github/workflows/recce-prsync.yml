@@ -14,22 +14,17 @@ jobs:
     steps:
     - name: Checkout the repo
       uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
 
     - name: Add Upstream remote
-      run: git remote add upstream https://github.com/opensource-observer/oso.git
-
-    - name: Fetch Upstream
-      run: git fetch
-
-    - name: Rebase from Upstream
-      run: |
-        git checkout dev
-        git rebase upstream/main
-
-    - name: Push changes
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git checkout dev
+        git remote add upstream https://github.com/opensource-observer/oso.git
+        git fetch upstream        
+        git rebase upstream/main        
         git push origin dev
   prsync:
     runs-on: ubuntu-latest
