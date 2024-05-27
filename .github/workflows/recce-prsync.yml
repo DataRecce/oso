@@ -14,17 +14,17 @@ jobs:
     steps:
     - name: Checkout the repo
       uses: actions/checkout@v3
-      with:
-        ref: dev
 
     - name: Add Upstream remote
       run: git remote add upstream https://github.com/opensource-observer/oso.git
 
     - name: Fetch Upstream
-      run: git fetch upstream
+      run: git fetch
 
     - name: Rebase from Upstream
-      run: git rebase upstream/main
+      run: |
+        git checkout dev
+        git rebase upstream/main
 
     - name: Push changes
       run: |
