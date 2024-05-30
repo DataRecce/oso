@@ -4,8 +4,8 @@ name: OSO Recce PR Sync
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '30 17 * * *' # run at 1:30 AM (UTC + 8) everyday
+  # schedule:
+  #   - cron: '30 17 * * *' # run at 1:30 AM (UTC + 8) everyday
 
 jobs:
   sync-upstream:

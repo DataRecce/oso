@@ -2,13 +2,13 @@ name: OSO Recce Staging CI
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 18 * * *' # run at 2 AM (UTC + 8) everyday
-  pull_request:
-    types: [closed]
-    branches: [main, dev]
-    paths:
-      - warehouse/dbt/**
+  # schedule:
+  #   - cron: '0 18 * * *' # run at 2 AM (UTC + 8) everyday
+  # pull_request:
+  #   types: [closed]
+  #   branches: [main, dev]
+  #   paths:
+  #     - warehouse/dbt/**
 
 env:
   # dbt env variables used in your dbt profiles.yml
