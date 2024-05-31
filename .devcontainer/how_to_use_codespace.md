@@ -57,6 +57,12 @@ Or you can follow the following steps to prepare your data warehouse by GitHub C
     dbt docs generate --target dev
     ```
 
+1. Launch the Recce inside the Codespaces to diff the dbt models in the `playground` and `dev` environment.
+    ```bash
+    recce server
+    ```
+    Once the Recce server is launched, the Codespaces will pop up a new browser tab with the Recce UI. You can use the Recce UI to diff the dbt models in the `playground` and `dev` environment. 
+
 ### Configure the Codespaces Secret for the Environment Variables
 
 Once you have set up the GCP project and BigQuery dataset, you can put your settings in the personal Codespaces secret. Therefor, you don't need to set the environment variables every time you launch the Codespaces.
