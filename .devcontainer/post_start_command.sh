@@ -7,8 +7,6 @@ if [ "${CODESPACES}" == "true" ]; then
   # Check environment variables
   bash .devcontainer/setup_required_env.sh
 
-  bash .devcontainer/prepare_dbt_manifest.sh
-
   bash .devcontainer/launch_recce_server.sh
 
 fi

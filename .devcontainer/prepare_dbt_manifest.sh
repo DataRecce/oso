@@ -8,6 +8,11 @@ if [ -f "${DIR}/../recce_state.json" ]; then
     exit 0
 fi
 
+if [ ! -f "${DBT_GOOGLE_KEYFILE}" ]; then
+    echo "Google cloud service account key is not found. Skip preparing the dbt manifest."
+    exit 0
+fi
+
 echo "Preparing the dbt manifest."
 pushd ${DIR}/../
 dbt deps && dbt build && dbt docs generate
