@@ -51,8 +51,7 @@ if [ -z "$GOOGLE_CLOUD_SERVICE_ACCOUNT_KEY_CONTENT" ]; then
     gcloud auth list
     exit 0
   else
-    echo -e "[${GREEN}Action${ENDCOLOR}] Please login to Google cloud to continue."
-    gcloud auth application-default login
+    echo "User is not logged in Google cloud. Won't be able to run dbt commands."
   fi
 else
   # Use the service account key to login
