@@ -35,7 +35,7 @@ jobs:
           poetry run which dbt
       
       - name: Install Recce
-        run: poetry run pip install recce-nightly
+        run: poetry run pip install git+https://github.com/DataRecce/recce.git
       
       - name: Add packages.yml file
         run: |
@@ -67,20 +67,13 @@ jobs:
           DBT_CURRENT_TARGET: "dev"
 
       - name: Run Recce CI
-        run: poetry run recce run
-
-      - name: Archive Recce State File
-        uses: actions/upload-artifact@v4
-        id: recce-artifact-uploader
-        with:
-          name: recce-state-file
-          path: recce_state.json
+        run: poetry run recce run --cloud --cloud-token ${{ secrets.RECCE_CLOUD_TOKEN }}
 
       - name: Prepare Recce Summary
         id: recce-summary
         run: |
           source $(poetry env info --path)/bin/activate
-          recce summary recce_state.json > recce_summary.md
+          recce summary --cloud --cloud-token ${{ secrets.RECCE_CLOUD_TOKEN }} > recce_summary.md
           cat recce_summary.md >> $GITHUB_STEP_SUMMARY
           echo '${{ env.NEXT_STEP_MESSAGE }}' >> recce_summary.md
 
@@ -95,16 +88,8 @@ jobs:
         env:
           ARTIFACT_URL: ${{ steps.recce-artifact-uploader.outputs.artifact-url }}
           NEXT_STEP_MESSAGE: |
-            ## Next Steps
-            If you want to check more detail inforamtion about the recce result, please download the [artifact](${{ steps.recce-artifact-uploader.outputs.artifact-url }}) file and open it by [Recce](https://pypi.org/project/recce/) CLI.
-
-            ### How to check the recce result
-            ```bash
-            # Unzip the downloaded artifact file
-            tar -xf recce-state-file.zip
-
             # Launch the recce server based on the state file
-            recce server --review recce_state.json
+            recce server --review --cloud
 
             # Open the recce server http://localhost:8000 by your browser
             ```
@@ -113,3 +98,4 @@ jobs:
         uses: thollander/actions-comment-pull-request@v2
         with:
           filePath: recce_summary.md
+          comment_tag: recce
