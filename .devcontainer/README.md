@@ -80,5 +80,3 @@ Once you have set up the GCP project and BigQuery dataset, you can put your sett
 
 1. Once the Codespaces secret is set up, you can launch the Codespaces with the OSO repository and the Codespaces will automatically set the environment variables for you.
 
-
-
