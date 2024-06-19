@@ -88,6 +88,13 @@ jobs:
         env:
           ARTIFACT_URL: ${{ steps.recce-artifact-uploader.outputs.artifact-url }}
           NEXT_STEP_MESSAGE: |
+            ## Next Steps          
+            If you want to check more detail information about the recce result, please follow this instruction
+
+            ```bash
+            # Checkout to the PR branch
+            git checkout ${{ github.event.pull_request.head.ref }}
+
             # Launch the recce server based on the state file
             recce server --review --cloud
 
