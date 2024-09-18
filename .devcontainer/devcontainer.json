@@ -9,5 +9,6 @@
         "DBT_GOOGLE_DEV_DATASET": "oso_playground_dev",
         "DBT_GOOGLE_KEYFILE": "/home/vscode/.config/gcloud/google-service-account.json",
     },
+    "forwardPorts": [8000],
     "postStartCommand": "mkdir -p /home/vscode/.config/gcloud && printenv GOOGLE_CLOUD_SERVICE_ACCOUNT_KEY_CONTENT > ${DBT_GOOGLE_KEYFILE} && recce server --cloud --review"
 }
